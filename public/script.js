@@ -9,6 +9,8 @@ document.getElementById('convert-form').addEventListener('submit', async (e) => 
     const loadingDiv = document.getElementById('loading');
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
+    const baseUrl = 'https://mp3converter-8p8tp3ytz-garbitschmolls-projects.vercel.app';
+    const convertUrl = `${baseUrl}/convert`;
     
     messageDiv.innerHTML = '';
     downloadLinksDiv.classList.add('hidden');
@@ -17,7 +19,7 @@ document.getElementById('convert-form').addEventListener('submit', async (e) => 
     progressText.innerText = '0%';
 
     try {
-        const response = await fetch('/convert', {
+        const response = await fetch(convertUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
