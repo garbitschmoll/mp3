@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #333; /* Hintergrundfarbe für den Dark-Mode */
+    color: #fff; /* Textfarbe für den Dark-Mode */
+}
+
+.container {
+    background: #222; /* Hintergrundfarbe für den Container im Dark-Mode */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #555; /* Hintergrundfarbe für Texteingabefeld im Dark-Mode */
+    color: #fff; /* Textfarbe für Texteingabefeld im Dark-Mode */
+}
+
+button {
+    padding: 10px;
+    background: #007bff; /* Hintergrundfarbe für Button im Dark-Mode */
+    color: #fff; /* Textfarbe für Button im Dark-Mode */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Übergangseffekt für Button */
+}
+
+button:hover {
+    background: #0056b3; /* Dunklere Hintergrundfarbe im Hover-Zustand */
+}
+
+.loading {
+    display: none;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 0;
+    height: 5px;
+    background: #007bff;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+#message {
+    margin-top: 20px;
+}
+
+#download-links {
+    margin-top: 20px;
+}
+
+/* Fügen Sie die CSS-Regeln für den Ladekreisel hinzu */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #333;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Download-Button-Styling */
+#download-links a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #28a745; /* Hintergrundfarbe für Download-Buttons im Dark-Mode */
+    color: #fff; /* Textfarbe für Download-Buttons im Dark-Mode */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Übergangseffekt für Download-Buttons */
+}
+
+#download-links a:hover {
+    background: #218838; /* Dunklere Hintergrundfarbe im Hover-Zustand */
+}
