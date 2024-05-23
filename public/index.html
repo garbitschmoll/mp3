@@ -13,16 +13,17 @@
             <input type="text" id="url" placeholder="Enter YouTube URL" required>
             <button type="submit">Convert</button>
         </form>
-        <div id="thumbnail" class="hidden"></div> <!-- Hier wird das Thumbnail angezeigt -->
         <div id="loading" class="loading hidden">
             <div class="loading-spinner"></div>
             <div class="progress-bar" id="progress-bar"></div>
+            <div id="progress-text">0%</div>
         </div>
         <div id="message"></div>
         <div id="download-links" class="hidden">
-            <a id="download-mp3" href="#" download class="hidden">Download MP3</a>
-            <a id="download-mp4" href="#" download class="hidden">Download MP4</a>
+            <a id="download-mp3" href="#" download class="hidden button">Download MP3</a>
+            <a id="download-mp4" href="#" download class="hidden button">Download MP4</a>
         </div>
+        <div id="timer" class="hidden"></div>
     </div>
     <script src="script.js"></script>
 </body>

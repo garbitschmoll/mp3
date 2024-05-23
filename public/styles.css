@@ -98,11 +98,11 @@ button:hover {
 }
 
 /* Download-Button-Styling */
-#download-links a {
+#download-links a.button {
     display: inline-block;
     margin-top: 10px;
     padding: 10px 20px;
-    background: #28a745; /* Hintergrundfarbe für Download-Buttons im Dark-Mode */
+    background: #06c70f; /* Hintergrundfarbe für Download-Buttons im Dark-Mode */
     color: #fff; /* Textfarbe für Download-Buttons im Dark-Mode */
     border: none;
     border-radius: 5px;
@@ -111,6 +111,11 @@ button:hover {
     transition: background 0.3s ease; /* Übergangseffekt für Download-Buttons */
 }
 
-#download-links a:hover {
-    background: #218838; /* Dunklere Hintergrundfarbe im Hover-Zustand */
+#download-links a.button:hover {
+    background: #04e6c0; /* Dunklere Hintergrundfarbe im Hover-Zustand */
+}
+
+#timer {
+    margin-top: 20px;
+    color: #f00; /* Textfarbe für Timer */
 }

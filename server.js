@@ -20,44 +20,66 @@ app.post('/convert', async (req, res) => {
     }
 
     const videoId = ytdl.getURLVideoID(url);
-    const outputPath = path.resolve(__dirname, 'public', `${videoId}.mp3`);
-    const tempOutputPath = path.resolve(__dirname, 'public', `${videoId}.mp4`);
+    const outputPathMp3 = path.resolve(__dirname, 'public', `${videoId}.mp3`);
+    const outputPathMp4 = path.resolve(__dirname, 'public', `${videoId}.mp4`);
 
     try {
-        const audioStream = ytdl(url, { filter: 'audioonly' });
+        const videoStream = ytdl(url);
 
-        const writeStream = fs.createWriteStream(tempOutputPath);
-        audioStream.pipe(writeStream);
+        // Download MP4
+        const mp4WriteStream = fs.createWriteStream(outputPathMp4);
+        videoStream.pipe(mp4WriteStream);
 
-        writeStream.on('finish', () => {
-            ffmpeg(tempOutputPath)
+        mp4WriteStream.on('finish', () => {
+            // Convert MP4 to MP3
+            ffmpeg(outputPathMp4)
                 .audioBitrate(128)
                 .on('start', commandLine => {
                     console.log('Spawned FFmpeg with command: ' + commandLine);
                 })
                 .on('progress', progress => {
-                    console.log('Processing: ' + progress.percent + '% done');
+                    const percent = progress.percent ? progress.percent.toFixed(2) : 0;
+                    res.write(JSON.stringify({ progress: percent }) + '\n');
                 })
-                .on('end', () => {
+                .on('end', async () => {
                     console.log('Conversion succeeded');
-                    fs.unlinkSync(tempOutputPath); // Entfernen Sie die temporäre Datei
-                    res.json({ success: true, downloadUrl: `/${videoId}.mp3` });
+                    res.write(JSON.stringify({
+                        success: true,
+                        downloadMp3Url: `/${videoId}.mp3`,
+                        downloadMp4Url: `/${videoId}.mp4`
+                    }) + '\n');
+
+                    // Close the response
+                    res.end();
+
+                    // Delete files after 1 minute
+                    setTimeout(() => {
+                        if (fs.existsSync(outputPathMp3)) {
+                            fs.unlinkSync(outputPathMp3);
+                        }
+                        if (fs.existsSync(outputPathMp4)) {
+                            fs.unlinkSync(outputPathMp4);
+                        }
+                    }, 60000); // Deletes the files after 1 minute
                 })
                 .on('error', (err) => {
                     console.error('FFmpeg error:', err.message);
-                    fs.unlinkSync(tempOutputPath); // Entfernen Sie die temporäre Datei bei Fehlern
-                    res.json({ success: false, message: 'Error converting video' });
+                    fs.unlinkSync(outputPathMp4); // Remove the temporary MP4 file on error
+                    res.write(JSON.stringify({ success: false, message: 'Error converting video' }) + '\n');
+                    res.end();
                 })
-                .save(outputPath);
+                .save(outputPathMp3);
         });
 
-        writeStream.on('error', (err) => {
+        mp4WriteStream.on('error', (err) => {
             console.error('Stream error:', err.message);
-            res.json({ success: false, message: 'Error downloading video' });
+            res.write(JSON.stringify({ success: false, message: 'Error downloading video' }) + '\n');
+            res.end();
         });
     } catch (error) {
         console.error('Stream error:', error.message);
-        res.json({ success: false, message: 'Error downloading video' });
+        res.write(JSON.stringify({ success: false, message: 'Error downloading video' }) + '\n');
+        res.end();
     }
 });
 
